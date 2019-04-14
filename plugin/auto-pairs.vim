@@ -209,6 +209,17 @@ func! AutoPairsInsert(key)
     return a:key
   end
 
+  let flag = 0
+  for [open, close] in items(g:AutoPairs)
+    if after[0:0] == open || after[0:0] == close
+      let flag=1
+    end
+  endfor
+
+  if !flag && after[0:0] !~ '\s'
+    return a:key
+  end
+
   " check open pairs
   for [open, close, opt] in b:AutoPairsList
     let ms = s:matchend(before.a:key, open)
